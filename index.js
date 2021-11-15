@@ -38,7 +38,7 @@ module.exports = postcss.plugin('postcss-cachebuster', function (opts) {
       // Used to distinguish between different hash algorithms among the
       // remembered checksum values in the `checksums` array.
       var checksumKey = [assetPath, opts.hashAlgorithm].join('|');
-      
+
       if (checksums[checksumKey]) {
         cachebuster = checksums[checksumKey];
       } else {
@@ -90,6 +90,9 @@ module.exports = postcss.plugin('postcss-cachebuster', function (opts) {
     css.walkAtRules('import', function walkThroughtImports(atrule) {
       pattern.lastIndex = 0;
       var results = pattern.exec(atrule.params);
+
+      if (!results) { return }
+
       var quote = results[1] || '"';
       var originalUrl = results[2];
 
